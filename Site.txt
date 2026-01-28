@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syniox Hub | Key System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0a0101; 
+            --card-bg: #1a0505; 
+            --primary-red: #b30000; 
+            --text-color: #e0e0e0;
+            --success-green: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+
+        .container {
+            width: 100%; max-width: 450px;
+            background: linear-gradient(180deg, #250505 0%, #0a0101 100%);
+            border: 2px solid #3d0a0a; border-radius: 30px;
+            padding: 30px; text-align: center;
+            box-shadow: 0 0 30px rgba(179, 0, 0, 0.3);
+        }
+
+        .profile-pic {
+            width: 100px; height: 100px; background: #000; border-radius: 50%;
+            margin: 0 auto 20px; border: 3px solid var(--primary-red);
+            box-shadow: 0 0 15px var(--primary-red);
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        h1 { color: var(--primary-red); font-size: 2.2rem; text-transform: uppercase; margin: 10px 0; text-shadow: 0 0 10px var(--primary-red); }
+        .subtitle { font-size: 0.85rem; color: #b0b0b0; margin-bottom: 25px; }
+
+        .card { background: var(--card-bg); border-radius: 15px; padding: 20px; text-align: left; margin-bottom: 15px; border-left: 4px solid var(--primary-red); position: relative; }
+
+        .btn {
+            background: linear-gradient(90deg, #800000, #b30000);
+            color: white; border: none; padding: 16px; border-radius: 12px;
+            width: 100%; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
+        }
+
+        .btn:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--primary-red); }
+
+        /* Timer & Key Area */
+        #timer-section, #key-section { display: none; margin-top: 20px; }
+        
+        .countdown-num { font-size: 3rem; font-weight: bold; color: var(--primary-red); margin: 10px 0; }
+        
+        .key-display {
+            background: #000; border: 2px solid var(--primary-red);
+            border-radius: 10px; padding: 15px; font-size: 1.4rem;
+            color: var(--primary-red); font-weight: bold; margin: 15px 0;
+            text-shadow: 0 0 5px var(--primary-red);
+            cursor: pointer; position: relative;
+        }
+
+        .copy-status { color: var(--success-green); font-size: 0.9rem; margin-top: 5px; display: none; }
+        
+        .note { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; font-size: 0.8rem; color: #888; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="profile-pic">
+        <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--primary-red);"></i>
+    </div>
+
+    <h1>SYNIOX HUB</h1>
+    <div class="subtitle">GET YOUR KEY - FOLLOW ON ROBLOX</div>
+
+    <div id="step-1">
+        <div class="card">
+            <h3 style="margin:0;">1. Visit & Follow</h3>
+            <p style="font-size: 0.85rem; margin: 10px 0 0 0;">Click below, follow the profile, then return here to generate your key.</p>
+        </div>
+        <button class="btn" onclick="handleAction()">
+            <i class="fa-solid fa-user-plus"></i> VISIT ROBLOX PROFILE
+        </button>
+    </div>
+
+    <div id="timer-section">
+        <div class="card">
+            <h3 style="margin:0;">Generating Your Key...</h3>
+            <div class="countdown-num" id="seconds">20</div>
+            <p style="font-size: 0.8rem; color: #bbb;">Please wait while we verify the actions.</p>
+        </div>
+    </div>
+
+    <div id="key-section">
+        <div class="card" style="border-left-color: var(--success-green);">
+            <h3 style="margin:0;">Your Syniox Hub Access Key</h3>
+            <div class="key-display" id="final-key" onclick="copyKey()">Syniox-X-Yusuf</div>
+            <div class="copy-status" id="copy-msg"><i class="fa-solid fa-check"></i> Key automatically copied to clipboard!</div>
+        </div>
+        <div class="note">
+            <strong>How to use:</strong> Paste this key into the Syniox Hub application when prompted.
+        </div>
+    </div>
+
+    <div class="note" style="text-align: left;">
+        <strong>Note:</strong> Make sure you're logged into Roblox. If you genuinely want to use Syniox Hub, follow and get the key. Enjoy!
+    </div>
+
+    <div style="margin-top:25px; font-size: 0.75rem; opacity: 0.4;">Syniox Hub Key System &copy; 2026</div>
+</div>
+
+<script>
+    const robloxUrl = "https://www.roblox.com/tr/users/3977499711/profile";
+    const myKey = "Syniox-X-Yusuf";
+
+    function handleAction() {
+        // Yeni sekmede Roblox'u aç
+        window.open(robloxUrl, '_blank');
+        
+        // Sitede sayacı başlat
+        document.getElementById('step-1').style.display = 'none';
+        document.getElementById('timer-section').style.display = 'block';
+        
+        let timeLeft = 20;
+        let timerElement = document.getElementById('seconds');
+        
+        let countdown = setInterval(function() {
+            timeLeft--;
+            timerElement.innerText = timeLeft;
+
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                showKey();
+            }
+        }, 1000);
+    }
+
+    function showKey() {
+        document.getElementById('timer-section').style.display = 'none';
+        document.getElementById('key-section').style.display = 'block';
+        
+        // Key'i otomatik kopyala
+        copyKey();
+    }
+
+    function copyKey() {
+        navigator.clipboard.writeText(myKey).then(() => {
+            document.getElementById('copy-msg').style.display = 'block';
+            // 3 saniye sonra mesajı gizle
+            setTimeout(() => {
+                document.getElementById('copy-msg').style.display = 'none';
+            }, 3000);
+        });
+    }
+</script>
+
+</body>
+</html>

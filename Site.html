@@ -7,11 +7,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0a0101; 
-            --card-bg: #1a0505; 
-            --primary-red: #b30000; 
+            --bg-color: #080101;
+            --card-bg: #120505;
+            --primary-red: #ff0000;
             --text-color: #e0e0e0;
-            --success-green: #2ecc71;
         }
 
         body {
@@ -24,108 +23,124 @@
 
         .container {
             width: 100%; max-width: 450px;
-            background: linear-gradient(180deg, #250505 0%, #0a0101 100%);
-            border: 2px solid #3d0a0a; border-radius: 30px;
+            background: linear-gradient(180deg, #1a0505 0%, #080101 100%);
+            border: 1px solid #2a0a0a; border-radius: 30px;
             padding: 30px; text-align: center;
-            box-shadow: 0 0 30px rgba(179, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
         }
 
+        /* GIF RESİM ALANI */
+        .profile-area { position: relative; width: 120px; height: 120px; margin: 0 auto 25px; }
         .profile-pic {
-            width: 100px; height: 100px; background: #000; border-radius: 50%;
-            margin: 0 auto 20px; border: 3px solid var(--primary-red);
-            box-shadow: 0 0 15px var(--primary-red);
+            width: 100%; height: 100%; 
+            background: #000; 
+            border-radius: 50%;
+            border: 3px solid var(--primary-red); 
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 25px var(--primary-red);
+            overflow: hidden;
+        }
+        .profile-pic img {
+            width: 100%; height: 100%; object-fit: cover;
         }
 
         h1 { color: var(--primary-red); font-size: 2.2rem; text-transform: uppercase; margin: 10px 0; text-shadow: 0 0 10px var(--primary-red); }
-        .subtitle { font-size: 0.85rem; color: #b0b0b0; margin-bottom: 25px; }
+        .subtitle { font-size: 0.85rem; color: #888; margin-bottom: 25px; letter-spacing: 1px; }
 
-        .card { background: var(--card-bg); border-radius: 15px; padding: 20px; text-align: left; margin-bottom: 15px; border-left: 4px solid var(--primary-red); position: relative; }
+        .steps-nav { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; }
+        .step-circle {
+            width: 45px; height: 45px; background: var(--card-bg); border: 2px solid #331111;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            z-index: 2; transition: 0.3s;
+        }
+        .step-circle.active { background: var(--primary-red); border-color: var(--primary-red); color: white; box-shadow: 0 0 15px var(--primary-red); }
+
+        .card {
+            background: var(--card-bg); border-radius: 18px; padding: 20px;
+            text-align: left; margin-bottom: 15px; border-left: 4px solid var(--primary-red);
+        }
 
         .btn {
-            background: linear-gradient(90deg, #800000, #b30000);
-            color: white; border: none; padding: 16px; border-radius: 12px;
+            background: linear-gradient(90deg, #8b0000, #ff0000);
+            color: white; border: none; padding: 18px; border-radius: 12px;
             width: 100%; font-weight: bold; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: 0.3s;
         }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4); }
 
-        .btn:hover { transform: scale(1.02); box-shadow: 0 0 20px var(--primary-red); }
+        .countdown-container { display: none; margin-top: 20px; }
+        .timer-display { font-size: 3.5rem; font-weight: 900; color: var(--primary-red); text-shadow: 0 0 20px var(--primary-red); }
 
-        /* Timer & Key Area */
-        #timer-section, #key-section { display: none; margin-top: 20px; }
-        
-        .countdown-num { font-size: 3rem; font-weight: bold; color: var(--primary-red); margin: 10px 0; }
-        
+        #key-box { display: none; }
         .key-display {
-            background: #000; border: 2px solid var(--primary-red);
-            border-radius: 10px; padding: 15px; font-size: 1.4rem;
-            color: var(--primary-red); font-weight: bold; margin: 15px 0;
-            text-shadow: 0 0 5px var(--primary-red);
-            cursor: pointer; position: relative;
+            background: #000; border: 2px solid var(--primary-red); border-radius: 12px;
+            padding: 20px; font-size: 1.5rem; font-weight: bold; color: var(--primary-red);
+            margin: 15px 0; text-align: center; cursor: pointer;
         }
 
-        .copy-status { color: var(--success-green); font-size: 0.9rem; margin-top: 5px; display: none; }
-        
-        .note { background: rgba(255,255,255,0.05); padding: 10px; border-radius: 10px; font-size: 0.8rem; color: #888; margin-top: 15px; }
+        .note-box { background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; font-size: 0.8rem; text-align: left; color: #aaa; margin-top: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="profile-pic">
-        <i class="fa-solid fa-shield-halved" style="font-size: 40px; color: var(--primary-red);"></i>
+    <div class="profile-area">
+        <div class="profile-pic">
+            <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox Hub Logo">
+        </div>
     </div>
 
     <h1>SYNIOX HUB</h1>
     <div class="subtitle">GET YOUR KEY - FOLLOW ON ROBLOX</div>
 
-    <div id="step-1">
+    <div class="steps-nav">
+        <div class="step-circle active" id="n1"><i class="fa-solid fa-user"></i></div>
+        <div class="step-circle" id="n2"><i class="fa-solid fa-heart"></i></div>
+        <div class="step-circle" id="n3"><i class="fa-solid fa-key"></i></div>
+    </div>
+
+    <div id="step-content">
         <div class="card">
-            <h3 style="margin:0;">1. Visit & Follow</h3>
-            <p style="font-size: 0.85rem; margin: 10px 0 0 0;">Click below, follow the profile, then return here to generate your key.</p>
+            <h3 style="margin:0 0 5px 0; font-size: 1rem;">1. Visit Roblox Profile</h3>
+            <p style="font-size: 0.85rem; color: #bbb; margin: 0;">Click the button below to visit my profile and follow to support Syniox Hub.</p>
         </div>
-        <button class="btn" onclick="handleAction()">
-            <i class="fa-solid fa-user-plus"></i> VISIT ROBLOX PROFILE
+        <button class="btn" onclick="startTimer()">
+            <i class="fa-solid fa-up-right-from-square"></i> VISIT ROBLOX PROFILE
         </button>
     </div>
 
-    <div id="timer-section">
+    <div id="timer-box" class="countdown-container">
+        <div class="card" style="text-align: center;">
+            <p style="margin: 0; font-weight: bold; color: var(--primary-red);">Generating Your Key...</p>
+            <div class="timer-display" id="seconds">20</div>
+            <p style="font-size: 0.8rem; color: #888;">Please wait while we prepare your access key</p>
+        </div>
+    </div>
+
+    <div id="key-box">
         <div class="card">
-            <h3 style="margin:0;">Generating Your Key...</h3>
-            <div class="countdown-num" id="seconds">20</div>
-            <p style="font-size: 0.8rem; color: #bbb;">Please wait while we verify the actions.</p>
+            <h3 style="color: #00ff88; margin-top:0; font-size: 1rem;"><i class="fa-solid fa-circle-check"></i> Key Automatically Copied!</h3>
+            <div class="key-display" onclick="copyKey()">Syniox-X-Yusuf</div>
+            <p style="font-size: 0.8rem; color: #bbb;"><b>How to use:</b> Paste this key into the Syniox Hub application.</p>
         </div>
     </div>
 
-    <div id="key-section">
-        <div class="card" style="border-left-color: var(--success-green);">
-            <h3 style="margin:0;">Your Syniox Hub Access Key</h3>
-            <div class="key-display" id="final-key" onclick="copyKey()">Syniox-X-Yusuf</div>
-            <div class="copy-status" id="copy-msg"><i class="fa-solid fa-check"></i> Key automatically copied to clipboard!</div>
-        </div>
-        <div class="note">
-            <strong>How to use:</strong> Paste this key into the Syniox Hub application when prompted.
-        </div>
+    <div class="note-box">
+        <strong>Note:</strong> Make sure you're logged into Roblox before following. <br><br>
+        <strong>Note 2:</strong> There is absolutely no pressure. If you genuinely want to use Syniox Hub, you can follow me and get the key. Enjoy!
     </div>
 
-    <div class="note" style="text-align: left;">
-        <strong>Note:</strong> Make sure you're logged into Roblox. If you genuinely want to use Syniox Hub, follow and get the key. Enjoy!
-    </div>
-
-    <div style="margin-top:25px; font-size: 0.75rem; opacity: 0.4;">Syniox Hub Key System &copy; 2026</div>
+    <div style="margin-top: 25px; font-size: 0.7rem; opacity: 0.3;">Syniox Hub Key System &copy; 2026</div>
 </div>
 
 <script>
-    const robloxUrl = "https://www.roblox.com/tr/users/3977499711/profile";
-    const myKey = "Syniox-X-Yusuf";
-
-    function handleAction() {
-        // Yeni sekmede Roblox'u aç
-        window.open(robloxUrl, '_blank');
-        
-        // Sitede sayacı başlat
-        document.getElementById('step-1').style.display = 'none';
-        document.getElementById('timer-section').style.display = 'block';
+    function startTimer() {
+        // Senin profil linkin açılıyor
+        window.open("https://www.roblox.com/tr/users/3977499711/profile", "_blank");
+        document.getElementById('step-content').style.display = 'none';
+        document.getElementById('timer-box').style.display = 'block';
+        document.getElementById('n2').classList.add('active');
         
         let timeLeft = 20;
         let timerElement = document.getElementById('seconds');
@@ -133,7 +148,6 @@
         let countdown = setInterval(function() {
             timeLeft--;
             timerElement.innerText = timeLeft;
-
             if (timeLeft <= 0) {
                 clearInterval(countdown);
                 showKey();
@@ -142,21 +156,15 @@
     }
 
     function showKey() {
-        document.getElementById('timer-section').style.display = 'none';
-        document.getElementById('key-section').style.display = 'block';
-        
-        // Key'i otomatik kopyala
+        document.getElementById('timer-box').style.display = 'none';
+        document.getElementById('key-box').style.display = 'block';
+        document.getElementById('n3').classList.add('active');
         copyKey();
     }
 
     function copyKey() {
-        navigator.clipboard.writeText(myKey).then(() => {
-            document.getElementById('copy-msg').style.display = 'block';
-            // 3 saniye sonra mesajı gizle
-            setTimeout(() => {
-                document.getElementById('copy-msg').style.display = 'none';
-            }, 3000);
-        });
+        navigator.clipboard.writeText("Syniox-X-Yusuf");
+        // Uyarı mesajı veya görsel efekt eklenebilir
     }
 </script>
 

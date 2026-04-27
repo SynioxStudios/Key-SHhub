@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syniox Hub | Secure Access</title>
+    <title>Syniox Hub | Access Center</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@400;700;900&display=swap');
@@ -15,7 +15,6 @@
             --panel-bg: rgba(10, 10, 10, 0.9);
         }
 
-        /* Kaydırma özelliğini aktif ettik */
         body {
             background-color: var(--bg-black);
             color: #fff;
@@ -25,8 +24,8 @@
             display: flex; 
             justify-content: center; 
             align-items: center;
-            overflow-x: hidden; /* Yatay kaydırmayı kapat */
-            overflow-y: auto;   /* Dikey kaydırmayı aç */
+            overflow-x: hidden;
+            overflow-y: auto;
             background: radial-gradient(circle at center, #1a0000 0%, #050505 100%);
         }
 
@@ -44,11 +43,10 @@
             background-size: cover; z-index: -1; opacity: 0.15; filter: brightness(0.5) sepia(1) saturate(10) hue-rotate(-50deg);
         }
 
-        /* Panel Container */
         .container {
             width: 100%;
             max-width: 440px;
-            padding: 40px 20px; /* Üst ve alttan boşluk vererek butona alan açtık */
+            padding: 40px 20px;
             box-sizing: border-box;
         }
 
@@ -127,8 +125,8 @@
             box-shadow: 0 4px 12px rgba(255, 0, 0, 0.4);
         }
 
-        .step-content b { display: block; font-size: 0.9rem; color: #fff; }
-        .step-content p { margin: 3px 0 0; font-size: 0.7rem; color: #888; line-height: 1.4; }
+        .step-content b { display: block; font-size: 0.95rem; color: #fff; }
+        .step-content p { margin: 3px 0 0; font-size: 0.75rem; color: #888; line-height: 1.4; }
 
         .glow-btn {
             background: #fff; color: #000;
@@ -149,15 +147,6 @@
             display: flex; justify-content: space-between;
             margin-top: 30px; font-size: 0.6rem; color: #444;
             letter-spacing: 1px;
-        }
-
-        /* Mobil Optimizasyon */
-        @media (max-height: 750px) {
-            .container { padding: 20px 10px; }
-            .main-card { padding: 30px 20px; }
-            .header { margin-bottom: 25px; }
-            .logo-container { width: 70px; height: 70px; }
-            .shimmer-text { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -181,29 +170,29 @@
         <div class="step">
             <div class="step-num">1</div>
             <div class="step-content">
-                <b>Establish Connection</b>
-                <p>Join the official Discord server for authorization.</p>
+                <b>Join Server</b>
+                <p>Access our community to unlock the hub.</p>
             </div>
         </div>
 
         <div class="step">
             <div class="step-num">2</div>
             <div class="step-content">
-                <b>Retrieve Terminal</b>
-                <p>Go to #key channel to get your permanent access code.</p>
+                <b>Get Your Key</b>
+                <p>Find the permanent key in the #key channel.</p>
             </div>
         </div>
 
         <div class="step">
             <div class="step-num">3</div>
             <div class="step-content">
-                <b>Authentication</b>
-                <p>Input the key into the Syniox Hub loader.</p>
+                <b>Start Script</b>
+                <p>Paste the key into the loader and enjoy.</p>
             </div>
         </div>
 
         <a href="https://discord.gg/DbAU5Z6HPd" target="_blank" class="glow-btn">
-            <i class="fa-brands fa-discord"></i> JOIN DISCORD SERVER
+            <i class="fa-brands fa-discord"></i> GO TO DISCORD SERVER
         </a>
 
         <div class="footer-info">

@@ -3,169 +3,161 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syniox Hub | Discord Access</title>
+    <title>Syniox Hub | Authorization</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --bg-color: #080101;
-            --card-bg: #120505;
-            --primary-red: #ff0000;
-            --discord-color: #5865F2; /* Discord'un orijinal mavisi yerine senin temana uygun kırmızıyı korudum ama ikonlarda kullanabilirsin */
-            --text-color: #e0e0e0;
+            --main-bg: #050202;
+            --panel-bg: #0d0606;
+            --neon-red: #ff3131;
+            --neon-orange: #ff5e00;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 49, 49, 0.2);
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--main-bg);
+            color: #fff;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; margin: 0; padding: 20px;
+            min-height: 100vh; margin: 0;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 49, 49, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 94, 0, 0.05) 0%, transparent 20%);
         }
 
-        .container {
-            width: 100%; max-width: 450px;
-            background: linear-gradient(180deg, #1a0505 0%, #080101 100%);
-            border: 1px solid #2a0a0a; border-radius: 30px;
-            padding: 30px; text-align: center;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.15);
+        .main-frame {
+            width: 100%; max-width: 420px;
+            background: var(--panel-bg);
+            border: 2px solid var(--border);
+            border-radius: 24px; padding: 30px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
+            position: relative; overflow: hidden;
         }
 
-        .profile-area { position: relative; width: 120px; height: 120px; margin: 0 auto 25px; }
-        .profile-pic {
-            width: 100%; height: 100%; 
-            background: #000; 
-            border-radius: 50%;
-            border: 3px solid var(--primary-red); 
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 25px var(--primary-red);
-            overflow: hidden;
-        }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-
-        h1 { color: var(--primary-red); font-size: 2.2rem; text-transform: uppercase; margin: 10px 0; text-shadow: 0 0 10px var(--primary-red); }
-        .subtitle { font-size: 0.85rem; color: #888; margin-bottom: 25px; letter-spacing: 1px; }
-
-        .steps-nav { display: flex; justify-content: space-between; margin-bottom: 30px; position: relative; }
-        .step-circle {
-            width: 45px; height: 45px; background: var(--card-bg); border: 2px solid #331111;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            z-index: 2; transition: 0.3s;
-        }
-        .step-circle.active { background: var(--primary-red); border-color: var(--primary-red); color: white; box-shadow: 0 0 15px var(--primary-red); }
-
-        .card {
-            background: var(--card-bg); border-radius: 18px; padding: 20px;
-            text-align: left; margin-bottom: 15px; border-left: 4px solid var(--primary-red);
+        /* Üst Dekorasyon */
+        .main-frame::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(90deg, var(--neon-red), var(--neon-orange));
         }
 
-        .btn {
-            background: linear-gradient(90deg, #8b0000, #ff0000);
-            color: white; border: none; padding: 18px; border-radius: 12px;
-            width: 100%; font-weight: bold; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+        .header-box { text-align: center; margin-bottom: 30px; }
+        .logo-wrap {
+            width: 80px; height: 80px; margin: 0 auto 15px;
+            border: 2px solid var(--neon-red); border-radius: 20px;
+            transform: rotate(45deg); display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 49, 49, 0.1); box-shadow: 0 0 15px rgba(255, 49, 49, 0.2);
+        }
+        .logo-wrap img { 
+            width: 50px; height: 50px; transform: rotate(-45deg); 
+            border-radius: 10px;
+        }
+
+        .header-box h1 { margin: 5px 0; font-size: 1.7rem; letter-spacing: 4px; text-transform: uppercase; }
+        .header-box p { font-size: 0.7rem; color: #666; letter-spacing: 2px; }
+
+        .auth-status {
+            background: var(--glass); border: 1px solid var(--border);
+            border-radius: 12px; padding: 12px; font-size: 0.8rem;
+            display: flex; align-items: center; gap: 10px; margin-bottom: 25px;
+        }
+        .auth-status i { color: var(--neon-orange); }
+
+        /* Protokol Adımları */
+        .protocol-step {
+            background: var(--glass); border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px; padding: 16px; margin-bottom: 12px;
+            display: flex; align-items: flex-start; gap: 15px;
             transition: 0.3s;
         }
-        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4); }
+        .protocol-step:hover { background: rgba(255, 49, 49, 0.05); border-color: var(--border); }
 
-        .timer-display { font-size: 3.5rem; font-weight: 900; color: var(--primary-red); text-shadow: 0 0 20px var(--primary-red); }
-
-        #timer-box, #key-box { display: none; }
-
-        .key-display {
-            background: #000; border: 2px solid var(--primary-red); border-radius: 12px;
-            padding: 20px; font-size: 1.5rem; font-weight: bold; color: var(--primary-red);
-            margin: 15px 0; text-align: center; cursor: pointer;
+        .step-id {
+            background: linear-gradient(135deg, var(--neon-red), var(--neon-orange));
+            min-width: 35px; height: 35px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 0.9rem;
         }
 
-        .note-box { background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; font-size: 0.8rem; text-align: left; color: #aaa; margin-top: 15px; }
+        .step-content h3 { margin: 0; font-size: 0.95rem; color: #eee; }
+        .step-content p { margin: 5px 0 0; font-size: 0.75rem; color: #777; line-height: 1.4; }
+        
+        .tag {
+            color: var(--neon-orange); background: rgba(255, 94, 0, 0.1);
+            padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace;
+        }
+
+        /* Aksiyon Butonu */
+        .action-btn {
+            width: 100%; padding: 16px; border: none; border-radius: 14px;
+            background: linear-gradient(90deg, #d31d1d, #ff5e00);
+            color: #fff; font-weight: bold; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            margin-top: 20px; transition: 0.3s; text-transform: uppercase;
+        }
+        .action-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
+
+        .sys-info {
+            display: flex; justify-content: space-between; margin-top: 25px;
+            font-size: 0.6rem; color: #444; font-family: monospace;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="profile-area">
-        <div class="profile-pic">
-            <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox Hub Logo">
+<div class="main-frame">
+    <div class="header-box">
+        <div class="logo-wrap">
+            <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox">
+        </div>
+        <h1>SYNIOX HUB</h1>
+        <p>SECURE ACCESS INTERFACE</p>
+    </div>
+
+    <div class="auth-status">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <span>Access keys are rotated every 24 hours. Connect to Discord.</span>
+    </div>
+
+    <div class="protocol-step">
+        <div class="step-id">01</div>
+        <div class="step-content">
+            <h3>Establish Link</h3>
+            <p>Join the server via the authorization button below.</p>
         </div>
     </div>
 
-    <h1>SYNIOX HUB</h1>
-    <div class="subtitle">GET YOUR KEY - JOIN OUR COMMUNITY</div>
-
-    <div class="steps-nav">
-        <div class="step-circle active" id="n1"><i class="fa-brands fa-discord"></i></div>
-        <div class="step-circle" id="n2"><i class="fa-solid fa-hourglass-half"></i></div>
-        <div class="step-circle" id="n3"><i class="fa-solid fa-check-double"></i></div>
-    </div>
-
-    <div id="step-content">
-        <div class="card">
-            <h3 style="margin:0 0 5px 0; font-size: 1rem;">1. Join Discord Server</h3>
-            <p style="font-size: 0.85rem; color: #bbb; margin: 0;">Click the button below to join our server. You must be in the server to use the hub.</p>
-        </div>
-        <button class="btn" onclick="startTimer()">
-            <i class="fa-brands fa-discord"></i> JOIN DISCORD SERVER
-        </button>
-    </div>
-
-    <div id="timer-box">
-        <div class="card" style="text-align: center;">
-            <p style="margin: 0; font-weight: bold; color: var(--primary-red);">Verifying Status...</p>
-            <div class="timer-display" id="seconds">20</div>
-            <p style="font-size: 0.8rem; color: #888;">Checking server membership and preparing key</p>
+    <div class="protocol-step">
+        <div class="step-id">02</div>
+        <div class="step-content">
+            <h3>Locate Terminal</h3>
+            <p>Navigate to the <span class="tag">#key-system</span> directory in the server.</p>
         </div>
     </div>
 
-    <div id="key-box">
-        <div class="card">
-            <h3 style="color: #00ff88; margin-top:0; font-size: 1rem;"><i class="fa-solid fa-circle-check"></i> Key Ready!</h3>
-            <div class="key-display" id="copy-target" onclick="copyKey()">Syniox-X-Yusuf</div>
-            <p style="font-size: 0.8rem; color: #bbb;"><b>Tip:</b> Click the box to copy the key again.</p>
+    <div class="protocol-step">
+        <div class="step-id">03</div>
+        <div class="step-content">
+            <h3>Finalize Auth</h3>
+            <p>Type the key from the pinned message into your hub application.</p>
         </div>
     </div>
 
-    <div class="note-box">
-        <strong>Note:</strong> If you leave the Discord server, your key may be blacklisted.
-    </div>
+    <button class="action-btn" onclick="openDiscord()">
+        <i class="fa-brands fa-discord"></i> AUTHORIZE DISCORD
+    </button>
 
-    <div style="margin-top: 25px; font-size: 0.7rem; opacity: 0.3;">Syniox Hub Key System &copy; 2026</div>
+    <div class="sys-info">
+        <span>STATUS: READY</span>
+        <span>VERSION: 2.0.4</span>
+        <span>SYNIOX_SYS_2026</span>
+    </div>
 </div>
 
 <script>
-    function startTimer() {
-        // BURAYA KENDİ DISCORD DAVET LİNKİNİ YAZ
+    function openDiscord() {
+        // Davet linkini buraya koy
         window.open("https://discord.gg/DbAU5Z6HPd", "_blank");
-        
-        document.getElementById('step-content').style.display = 'none';
-        document.getElementById('timer-box').style.display = 'block';
-        document.getElementById('n2').classList.add('active');
-        
-        let timeLeft = 20;
-        let timerElement = document.getElementById('seconds');
-        
-        let countdown = setInterval(function() {
-            timeLeft--;
-            timerElement.innerText = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(countdown);
-                showKey();
-            }
-        }, 1000);
-    }
-
-    function showKey() {
-        document.getElementById('timer-box').style.display = 'none';
-        document.getElementById('key-box').style.display = 'block';
-        document.getElementById('n3').classList.add('active');
-        copyKey(false); 
-    }
-
-    function copyKey(notify = true) {
-        const key = "Syniox-X-Yusuf";
-        navigator.clipboard.writeText(key);
-        if(notify) {
-            alert("Key copied to clipboard!");
-        }
     }
 </script>
 

@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syniox Hub | Key System</title>
+    <title>Syniox Hub | Discord Access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
             --bg-color: #080101;
             --card-bg: #120505;
             --primary-red: #ff0000;
+            --discord-color: #5865F2; /* Discord'un orijinal mavisi yerine senin temana uygun kırmızıyı korudum ama ikonlarda kullanabilirsin */
             --text-color: #e0e0e0;
         }
 
@@ -66,10 +67,10 @@
         }
         .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(255, 0, 0, 0.4); }
 
-        .countdown-container { display: none; margin-top: 20px; }
         .timer-display { font-size: 3.5rem; font-weight: 900; color: var(--primary-red); text-shadow: 0 0 20px var(--primary-red); }
 
-        #key-box { display: none; }
+        #timer-box, #key-box { display: none; }
+
         .key-display {
             background: #000; border: 2px solid var(--primary-red); border-radius: 12px;
             padding: 20px; font-size: 1.5rem; font-weight: bold; color: var(--primary-red);
@@ -89,42 +90,42 @@
     </div>
 
     <h1>SYNIOX HUB</h1>
-    <div class="subtitle">GET YOUR KEY - FOLLOW ON ROBLOX</div>
+    <div class="subtitle">GET YOUR KEY - JOIN OUR COMMUNITY</div>
 
     <div class="steps-nav">
-        <div class="step-circle active" id="n1"><i class="fa-solid fa-user"></i></div>
-        <div class="step-circle" id="n2"><i class="fa-solid fa-heart"></i></div>
-        <div class="step-circle" id="n3"><i class="fa-solid fa-key"></i></div>
+        <div class="step-circle active" id="n1"><i class="fa-brands fa-discord"></i></div>
+        <div class="step-circle" id="n2"><i class="fa-solid fa-hourglass-half"></i></div>
+        <div class="step-circle" id="n3"><i class="fa-solid fa-check-double"></i></div>
     </div>
 
     <div id="step-content">
         <div class="card">
-            <h3 style="margin:0 0 5px 0; font-size: 1rem;">1. Visit Roblox Profile</h3>
-            <p style="font-size: 0.85rem; color: #bbb; margin: 0;">Click the button below to visit my profile and follow to support Syniox Hub.</p>
+            <h3 style="margin:0 0 5px 0; font-size: 1rem;">1. Join Discord Server</h3>
+            <p style="font-size: 0.85rem; color: #bbb; margin: 0;">Click the button below to join our server. You must be in the server to use the hub.</p>
         </div>
         <button class="btn" onclick="startTimer()">
-            <i class="fa-solid fa-up-right-from-square"></i> VISIT ROBLOX PROFILE
+            <i class="fa-brands fa-discord"></i> JOIN DISCORD SERVER
         </button>
     </div>
 
-    <div id="timer-box" class="countdown-container">
+    <div id="timer-box">
         <div class="card" style="text-align: center;">
-            <p style="margin: 0; font-weight: bold; color: var(--primary-red);">Generating Your Key...</p>
+            <p style="margin: 0; font-weight: bold; color: var(--primary-red);">Verifying Status...</p>
             <div class="timer-display" id="seconds">20</div>
-            <p style="font-size: 0.8rem; color: #888;">Please wait while we prepare your access key</p>
+            <p style="font-size: 0.8rem; color: #888;">Checking server membership and preparing key</p>
         </div>
     </div>
 
     <div id="key-box">
         <div class="card">
-            <h3 style="color: #00ff88; margin-top:0; font-size: 1rem;"><i class="fa-solid fa-circle-check"></i> Key Automatically Copied!</h3>
-            <div class="key-display" onclick="copyKey()">Syniox-X-Yusuf</div>
-            <p style="font-size: 0.8rem; color: #bbb;"><b>How to use:</b> Paste this key into the Syniox Hub application.</p>
+            <h3 style="color: #00ff88; margin-top:0; font-size: 1rem;"><i class="fa-solid fa-circle-check"></i> Key Ready!</h3>
+            <div class="key-display" id="copy-target" onclick="copyKey()">Syniox-X-Yusuf</div>
+            <p style="font-size: 0.8rem; color: #bbb;"><b>Tip:</b> Click the box to copy the key again.</p>
         </div>
     </div>
 
     <div class="note-box">
-        <strong>Note:</strong> Make sure you're logged into Roblox before following.
+        <strong>Note:</strong> If you leave the Discord server, your key may be blacklisted.
     </div>
 
     <div style="margin-top: 25px; font-size: 0.7rem; opacity: 0.3;">Syniox Hub Key System &copy; 2026</div>
@@ -132,7 +133,9 @@
 
 <script>
     function startTimer() {
-        window.open("https://www.roblox.com/tr/users/3977499711/profile", "_blank");
+        // BURAYA KENDİ DISCORD DAVET LİNKİNİ YAZ
+        window.open("https://discord.gg/DbAU5Z6HPd", "_blank");
+        
         document.getElementById('step-content').style.display = 'none';
         document.getElementById('timer-box').style.display = 'block';
         document.getElementById('n2').classList.add('active');
@@ -154,11 +157,15 @@
         document.getElementById('timer-box').style.display = 'none';
         document.getElementById('key-box').style.display = 'block';
         document.getElementById('n3').classList.add('active');
-        copyKey();
+        copyKey(false); 
     }
 
-    function copyKey() {
-        navigator.clipboard.writeText("Syniox-X-Yusuf");
+    function copyKey(notify = true) {
+        const key = "Syniox-X-Yusuf";
+        navigator.clipboard.writeText(key);
+        if(notify) {
+            alert("Key copied to clipboard!");
+        }
     }
 </script>
 

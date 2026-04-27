@@ -1,165 +1,141 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syniox Hub | Authorization</title>
+    <title>Syniox Hub | Key System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --main-bg: #050202;
-            --panel-bg: #0d0606;
-            --neon-red: #ff3131;
-            --neon-orange: #ff5e00;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 49, 49, 0.2);
+            --bg: #050505;
+            --accent: #ff0000;
+            --text-primary: #ffffff;
+            --text-secondary: #777777;
+            --panel: #0f0f0f;
         }
 
         body {
-            background-color: var(--main-bg);
-            color: #fff;
+            background-color: var(--bg);
+            color: var(--text-primary);
             font-family: 'Inter', 'Segoe UI', sans-serif;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; margin: 0;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(255, 49, 49, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 94, 0, 0.05) 0%, transparent 20%);
         }
 
-        .main-frame {
-            width: 100%; max-width: 420px;
-            background: var(--panel-bg);
-            border: 2px solid var(--border);
-            border-radius: 24px; padding: 30px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-            position: relative; overflow: hidden;
+        .main-container {
+            width: 100%; max-width: 380px;
+            padding: 40px 25px;
+            text-align: center;
         }
 
-        /* Üst Dekorasyon */
-        .main-frame::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, var(--neon-red), var(--neon-orange));
+        .brand-logo {
+            width: 90px; height: 90px;
+            margin: 0 auto 20px;
+            border: 2px solid var(--accent);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
         }
+        .brand-logo img { width: 100%; height: 100%; object-fit: cover; }
 
-        .header-box { text-align: center; margin-bottom: 30px; }
-        .logo-wrap {
-            width: 80px; height: 80px; margin: 0 auto 15px;
-            border: 2px solid var(--neon-red); border-radius: 20px;
-            transform: rotate(45deg); display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 49, 49, 0.1); box-shadow: 0 0 15px rgba(255, 49, 49, 0.2);
-        }
-        .logo-wrap img { 
-            width: 50px; height: 50px; transform: rotate(-45deg); 
-            border-radius: 10px;
-        }
+        h1 { font-size: 1.8rem; margin: 5px 0; letter-spacing: 3px; font-weight: 800; }
+        .tagline { color: var(--text-secondary); font-size: 0.75rem; margin-bottom: 45px; letter-spacing: 1px; }
 
-        .header-box h1 { margin: 5px 0; font-size: 1.7rem; letter-spacing: 4px; text-transform: uppercase; }
-        .header-box p { font-size: 0.7rem; color: #666; letter-spacing: 2px; }
-
-        .auth-status {
-            background: var(--glass); border: 1px solid var(--border);
-            border-radius: 12px; padding: 12px; font-size: 0.8rem;
-            display: flex; align-items: center; gap: 10px; margin-bottom: 25px;
-        }
-        .auth-status i { color: var(--neon-orange); }
-
-        /* Protokol Adımları */
-        .protocol-step {
-            background: var(--glass); border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 16px; padding: 16px; margin-bottom: 12px;
-            display: flex; align-items: flex-start; gap: 15px;
-            transition: 0.3s;
-        }
-        .protocol-step:hover { background: rgba(255, 49, 49, 0.05); border-color: var(--border); }
-
-        .step-id {
-            background: linear-gradient(135deg, var(--neon-red), var(--neon-orange));
-            min-width: 35px; height: 35px; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 900; font-size: 0.9rem;
-        }
-
-        .step-content h3 { margin: 0; font-size: 0.95rem; color: #eee; }
-        .step-content p { margin: 5px 0 0; font-size: 0.75rem; color: #777; line-height: 1.4; }
+        /* Step List */
+        .instruction-list { text-align: left; margin-bottom: 40px; }
         
-        .tag {
-            color: var(--neon-orange); background: rgba(255, 94, 0, 0.1);
-            padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace;
+        .step-item {
+            display: flex; align-items: flex-start; gap: 18px;
+            margin-bottom: 30px;
         }
 
-        /* Aksiyon Butonu */
-        .action-btn {
-            width: 100%; padding: 16px; border: none; border-radius: 14px;
-            background: linear-gradient(90deg, #d31d1d, #ff5e00);
-            color: #fff; font-weight: bold; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            margin-top: 20px; transition: 0.3s; text-transform: uppercase;
+        .step-icon-box {
+            background: rgba(255, 0, 0, 0.05);
+            color: var(--accent);
+            min-width: 45px; height: 45px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem;
+            border: 1px solid rgba(255, 0, 0, 0.1);
         }
-        .action-btn:hover { filter: brightness(1.2); transform: scale(1.02); }
 
-        .sys-info {
-            display: flex; justify-content: space-between; margin-top: 25px;
-            font-size: 0.6rem; color: #444; font-family: monospace;
+        .step-info b { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+        .step-info p { margin: 0; font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4; }
+
+        .channel-highlight {
+            color: var(--accent);
+            font-family: 'Consolas', monospace;
+            background: rgba(255, 0, 0, 0.08);
+            padding: 2px 5px; border-radius: 4px;
+        }
+
+        /* The Button */
+        .discord-btn {
+            background: var(--accent);
+            color: #fff; text-decoration: none;
+            padding: 20px; border-radius: 15px;
+            width: 100%; display: flex; align-items: center;
+            justify-content: center; gap: 12px;
+            font-weight: 700; font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-sizing: border-box;
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .discord-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .copyright {
+            margin-top: 40px; font-size: 0.65rem; color: #333;
+            text-transform: uppercase; letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
-<div class="main-frame">
-    <div class="header-box">
-        <div class="logo-wrap">
-            <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox">
+<div class="main-container">
+    <div class="brand-logo">
+        <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox Logo">
+    </div>
+
+    <h1>SYNIOX HUB</h1>
+    <div class="tagline">KEY RETRIEVAL SYSTEM</div>
+
+    <div class="instruction-list">
+        <div class="step-item">
+            <div class="step-icon-box"><i class="fa-brands fa-discord"></i></div>
+            <div class="step-info">
+                <b>Join Discord</b>
+                <p>Join our community server to unlock the hub features.</p>
+            </div>
         </div>
-        <h1>SYNIOX HUB</h1>
-        <p>SECURE ACCESS INTERFACE</p>
-    </div>
 
-    <div class="auth-status">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>Access keys are rotated every 24 hours. Connect to Discord.</span>
-    </div>
-
-    <div class="protocol-step">
-        <div class="step-id">01</div>
-        <div class="step-content">
-            <h3>Establish Link</h3>
-            <p>Join the server via the authorization button below.</p>
+        <div class="step-item">
+            <div class="step-icon-box"><i class="fa-solid fa-hashtag"></i></div>
+            <div class="step-info">
+                <b>Locate Channel</b>
+                <p>Find the <span class="channel-highlight">#key</span> channel in the server sidebar.</p>
+            </div>
         </div>
-    </div>
 
-    <div class="protocol-step">
-        <div class="step-id">02</div>
-        <div class="step-content">
-            <h3>Locate Terminal</h3>
-            <p>Navigate to the <span class="tag">#key-system</span> directory in the server.</p>
-        </div>
-    </div>
-
-    <div class="protocol-step">
-        <div class="step-id">03</div>
-        <div class="step-content">
-            <h3>Finalize Auth</h3>
-            <p>Type the key from the pinned message into your hub application.</p>
+        <div class="step-item">
+            <div class="step-icon-box"><i class="fa-solid fa-key"></i></div>
+            <div class="step-info">
+                <b>Get Your Key</b>
+                <p>Copy the permanent key and paste it into the application.</p>
+            </div>
         </div>
     </div>
 
-    <button class="action-btn" onclick="openDiscord()">
-        <i class="fa-brands fa-discord"></i> AUTHORIZE DISCORD
-    </button>
+    <a href="https://discord.gg/DbAU5Z6HPd" target="_blank" class="discord-btn">
+        GO TO DISCORD SERVER <i class="fa-solid fa-arrow-right"></i>
+    </a>
 
-    <div class="sys-info">
-        <span>STATUS: READY</span>
-        <span>VERSION: 2.0.4</span>
-        <span>SYNIOX_SYS_2026</span>
-    </div>
+    <div class="copyright">Syniox Hub © 2026</div>
 </div>
-
-<script>
-    function openDiscord() {
-        // Davet linkini buraya koy
-        window.open("https://discord.gg/DbAU5Z6HPd", "_blank");
-    }
-</script>
 
 </body>
 </html>

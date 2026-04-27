@@ -6,170 +6,199 @@
     <title>Syniox Hub | Secure Access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@400;700;900&display=swap');
+
         :root {
-            /* Senin Ana Renklerin: Kırmızı ve Siyah */
-            --bg-color: #000000;
-            --panel-bg: #111111;
-            --accent: #ff0000;
-            --text-main: #ffffff;
-            --text-dim: #888888;
-            --border-color: #222222;
+            --primary: #ff0000;
+            --primary-glow: rgba(255, 0, 0, 0.6);
+            --bg-black: #050505;
+            --panel-bg: rgba(10, 10, 10, 0.85);
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-black);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            margin: 0; min-height: 100vh;
             display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; margin: 0; padding: 20px;
-            /* Arka plan derinlik efekti (Görseldeki gibi) */
-            background-image: 
-                radial-gradient(circle at center, #1a0000 0%, #000000 70%),
-                linear-gradient(rgba(255, 0, 0, 0.02) 1px, transparent 1px);
-            background-size: cover, 30px 30px;
-        }
-
-        .main-panel {
-            width: 100%; max-width: 400px;
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 30px;
-            padding: 40px 25px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 1), 0 0 15px rgba(255, 0, 0, 0.05);
-            position: relative;
             overflow: hidden;
+            /* Derinlik katmanları */
+            background: radial-gradient(circle at center, #1a0000 0%, #050505 100%);
         }
 
-        /* Başlık Bölümü */
-        .header { text-align: center; margin-bottom: 35px; }
-        
-        .logo-wrap {
-            width: 80px; height: 80px; margin: 0 auto 15px;
-            border: 2px solid var(--accent); border-radius: 20px;
-            overflow: hidden; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        /* --- ARKA PLAN COŞTURMA --- */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123163/stars.png') repeat;
+            z-index: -2; opacity: 0.5; animation: moveStars 150s linear infinite;
         }
-        .logo-wrap img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- BURASI İSTEDİĞİN RENK DEĞİŞTİREN YAZI --- */
-        .color-shift {
-            font-size: 1.7rem; margin: 0; 
-            letter-spacing: 4px; font-weight: 900; 
-            text-transform: uppercase;
-            /* Beyazdan Kırmızıya Renk Değişimi */
-            background: linear-gradient(90deg, #ffffff, #ff0000, #ffffff);
+        @keyframes moveStars { from { background-position: 0 0; } to { background-position: 10000px 5000px; } }
+
+        .mountain-overlay {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 40vh;
+            background: url('https://i.imgur.com/vH95tK6.png') repeat-x;
+            background-size: contain; z-index: -1; opacity: 0.2; filter: brightness(0.5) sepia(1) saturate(10) hue-rotate(-50deg);
+        }
+
+        /* --- ANA PANEL --- */
+        .main-card {
+            width: 100%; max-width: 440px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 0, 0, 0.15);
+            border-radius: 40px;
+            padding: 50px 35px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 1), inset 0 0 20px rgba(255, 0, 0, 0.05);
+            position: relative;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Başlık Üstü Süsleme */
+        .card-top-line {
+            position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 4px; background: var(--primary);
+            box-shadow: 0 0 20px var(--primary); border-radius: 0 0 10px 10px;
+        }
+
+        .header { text-align: center; margin-bottom: 45px; }
+
+        /* Logo Pulse Efekti */
+        .logo-container {
+            width: 95px; height: 95px; margin: 0 auto 25px; position: relative;
+        }
+        .logo-container::after {
+            content: ''; position: absolute; inset: -5px;
+            border: 2px solid var(--primary); border-radius: 25px;
+            animation: pulseLogo 2s infinite;
+        }
+        .logo-container img {
+            width: 100%; height: 100%; border-radius: 25px; 
+            border: 2px solid var(--primary); object-fit: cover;
+        }
+
+        @keyframes pulseLogo {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        /* --- RENK DEĞİŞTİREN BAŞLIK (BEYAZ-KIRMIZI) --- */
+        .shimmer-text {
+            font-family: 'Syncopate', sans-serif;
+            font-size: 1.8rem; font-weight: 700; letter-spacing: 6px;
+            background: linear-gradient(90deg, #ffffff 0%, #ff0000 50%, #ffffff 100%);
             background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shift 3s ease-in-out infinite;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: textShimmer 3s linear infinite;
         }
 
-        @keyframes shift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* ------------------------------------------- */
-
-        .tagline { color: var(--text-dim); font-size: 0.75rem; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
-
-        /* Videodaki Adımlar (Turuncu numara kutulu yapı) */
-        .instruction-step {
-            display: flex; align-items: center; gap: 15px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-color);
-            border-radius: 18px;
-            padding: 15px; margin-bottom: 15px;
-            transition: 0.3s;
+        @keyframes textShimmer {
+            to { background-position: 200% center; }
         }
 
-        .instruction-step:hover {
-            border-color: rgba(255, 0, 0, 0.3);
-            background: rgba(255, 255, 255, 0.04);
+        .tagline { font-size: 0.65rem; color: #555; letter-spacing: 4px; text-transform: uppercase; margin-top: 8px; }
+
+        /* --- ADIM KARTLARI --- */
+        .step {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 0, 0, 0.05);
+            border-radius: 20px; padding: 20px; margin-bottom: 15px;
+            display: flex; align-items: center; gap: 20px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Numara Kutusu (Kırmızı ve Kopyalanmış gibi parlıyor) */
+        .step:hover {
+            background: rgba(255, 0, 0, 0.08);
+            border-color: rgba(255, 0, 0, 0.4);
+            transform: scale(1.03) translateX(5px);
+        }
+
         .step-num {
-            min-width: 35px; height: 35px;
-            background: var(--accent);
-            color: white; border-radius: 8px;
+            background: linear-gradient(135deg, #ff0000, #800000);
+            min-width: 40px; height: 40px; border-radius: 12px;
             display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1rem;
-            box-shadow: 0 4px 10px rgba(255, 0, 0, 0.3);
+            font-weight: 900; font-size: 1.1rem;
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
         }
 
-        .step-info b { display: block; font-size: 0.9rem; margin-bottom: 2px; color: var(--text-main); }
-        .step-info p { margin: 0; font-size: 0.75rem; color: var(--text-dim); line-height: 1.3; }
+        .step-content b { display: block; font-size: 0.95rem; color: #eee; }
+        .step-content p { margin: 4px 0 0; font-size: 0.75rem; color: #777; line-height: 1.4; }
 
-        .channel { color: var(--accent); font-weight: bold; font-family: monospace; }
-
-        /* Buton */
-        .btn-wrapper { margin-top: 30px; }
-        
-        .discord-btn {
-            background: var(--accent);
-            color: white; text-decoration: none;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            padding: 18px; border-radius: 15px;
-            font-weight: 700; font-size: 0.9rem;
-            transition: 0.3s;
-            box-shadow: 0 8px 15px rgba(255, 0, 0, 0.2);
+        /* --- COŞAN BUTON --- */
+        .glow-btn {
+            background: #fff; color: #000;
+            text-decoration: none; padding: 22px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+            font-weight: 900; font-size: 1rem; margin-top: 40px;
+            text-transform: uppercase; letter-spacing: 2px;
+            transition: 0.4s; position: relative; overflow: hidden;
         }
 
-        .discord-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 0, 0, 0.4);
-            filter: brightness(1.1);
+        .glow-btn:hover {
+            background: var(--primary); color: #fff;
+            box-shadow: 0 0 40px var(--primary-glow);
+            transform: translateY(-5px);
         }
 
-        .footer {
-            margin-top: 25px; text-align: center;
-            font-size: 0.6rem; color: #444;
-            letter-spacing: 1px;
+        .glow-btn i { font-size: 1.2rem; }
+
+        .footer-info {
+            display: flex; justify-content: space-between;
+            margin-top: 35px; font-size: 0.6rem; color: #333;
+            font-family: monospace; letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-<div class="main-panel">
+<div class="stars"></div>
+<div class="mountain-overlay"></div>
+
+<div class="main-card">
+    <div class="card-top-line"></div>
+    
     <div class="header">
-        <div class="logo-wrap">
-            <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox Logo">
+        <div class="logo-container">
+            <img src="https://i.hizliresim.com/r3xgxvw.gif" alt="Syniox Hub">
         </div>
-        <h1 class="color-shift">SYNIOX HUB</h1>
-        <div class="tagline">Static Key retrieval</div>
+        <h1 class="shimmer-text">SYNIOX HUB</h1>
+        <div class="tagline">BEYOND THE LIMITS</div>
     </div>
 
-    <div class="instruction-step">
+    <div class="step">
         <div class="step-num">1</div>
-        <div class="step-info">
-            <b>Join Discord Server</b>
-            <p>Join the community server to access the key.</p>
+        <div class="step-content">
+            <b>Establish Connection</b>
+            <p>Join the official Discord server for authorization.</p>
         </div>
     </div>
 
-    <div class="instruction-step">
+    <div class="step">
         <div class="step-num">2</div>
-        <div class="step-info">
-            <b>Find Channel</b>
-            <p>Look for the <span class="channel">#key</span> directory.</p>
+        <div class="step-content">
+            <b>Retrieve Terminal</b>
+            <p>Go to #key channel to get your permanent access code.</p>
         </div>
     </div>
 
-    <div class="instruction-step">
+    <div class="step">
         <div class="step-num">3</div>
-        <div class="step-info">
-            <b>Finalize</b>
-            <p>Copy the static key and paste it into the hub.</p>
+        <div class="step-content">
+            <b>Authentication</b>
+            <p>Input the key into the Syniox Hub loader.</p>
         </div>
     </div>
 
-    <div class="btn-wrapper">
-        <a href="https://discord.gg/DbAU5Z6HPd" target="_blank" class="discord-btn">
-            GO TO DISCORD SERVER <i class="fa-solid fa-chevron-right"></i>
-        </a>
-    </div>
+    <a href="https://discord.gg/DbAU5Z6HPd" target="_blank" class="glow-btn">
+        <i class="fa-brands fa-discord"></i> GO TO DISCORD SERVER
+    </a>
 
-    <div class="footer">SYSTEMS &copy; 2026</div>
+    <div class="footer-info">
+        <span>STATUS: SECURE</span>
+        <span>SYNIOX_SYSTEMS © 2026</span>
+    </div>
 </div>
 
 </body>
